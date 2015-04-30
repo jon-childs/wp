@@ -1,17 +1,7 @@
 <?php
-//==== FSM Theme Customizer
+//==== JC_CORE Theme Customizer
 
-class fsm_customize {
-
-    public static $heading_font_options = array(
-        'h1' => 'Header 1',
-        'h2' => 'Header 2',
-        'h3' => 'Header 3',
-        'h4' => 'Header 4',
-        'h5' => 'Header 5',
-        'h6' => 'Header 6',
-        'nav' => 'Navigation Links'
-    );
+class jc_core_customize {
 
     public static function get_fonts_array() {
     // @todo - Get this out of this class and into a custom control for reusability + performance reasons
@@ -45,32 +35,32 @@ class fsm_customize {
 
         if ( $google_fonts_query_results === false ) { // If it's missing, go get one and cache it
             error_log('Querying Google Fonts');
-            if ( defined( 'FSM_GOOGLE_PUBLIC_API_KEY' ) ) {
-                $response = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?&sort=popularity&key=' . FSM_GOOGLE_PUBLIC_API_KEY );
-                if ( ! is_wp_error($response) ) {
-                    $google_fonts_query_results_raw = json_decode(wp_remote_retrieve_body($response), true);
-                    $google_fonts_query_results = [];
+            $google_public_api_key = 'AIzaSyCXH2reNmyZDSFvdUkdg747bge3gRNtVL4';
+            
+            $response = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?&sort=popularity&key=' . $google_public_api_key );
+            if ( ! is_wp_error($response) ) {
+                $google_fonts_query_results_raw = json_decode(wp_remote_retrieve_body($response), true);
+                $google_fonts_query_results = [];
 
-                    foreach ( $google_fonts_query_results_raw['items'] as $font ) {
+                foreach ( $google_fonts_query_results_raw['items'] as $font ) {
 
-                        $body_categories = array('sans-serif', 'serif');
+                    $body_categories = array('sans-serif', 'serif');
 
-                        if ( in_array( $font['category'], $body_categories ) ) {
-                            $google_fonts_query_results[] = $font;
-                        }
-
+                    if ( in_array( $font['category'], $body_categories ) ) {
+                        $google_fonts_query_results[] = $font;
                     }
 
-                    set_site_transient( 'google_fonts_query_results', $google_fonts_query_results, 3 * DAY_IN_SECONDS ); // Cache lasts for three days
-                } elseif ( WP_DEBUG ) {
-                    echo '<pre>';
-                    var_dump($response);
-                    echo '</pre>';
-                    die();
                 }
+
+                set_site_transient( 'google_fonts_query_results', $google_fonts_query_results, 3 * DAY_IN_SECONDS ); // Cache lasts for three days
+            } elseif ( WP_DEBUG ) {
+                echo '<pre>';
+                var_dump($response);
+                echo '</pre>';
+                die();
             }
         }
-
+        
         foreach ( $google_fonts_query_results as $font ) {
             $font_name = $font['family'];                       // Name of the font
             $font_name_slug = sanitize_title($font_name);       // Slug of the font (as an array key)
@@ -152,7 +142,7 @@ class fsm_customize {
 
         /* Header Background Color */
 
-        $wp_customize->add_setting( 'fsm_header_background_color',
+        $wp_customize->add_setting( 'jc_core_header_background_color',
             array(
                 'default'    => false,
                 'type'       => 'theme_mod',
@@ -164,11 +154,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_header_background_color',
+                'jc_core_header_background_color',
                 array(
-                    'label'    => __('Header Background Color', 'fsm_core'),
+                    'label'    => __('Header Background Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_header_background_color',
+                    'settings' => 'jc_core_header_background_color',
                     'priority' => 10,
                 )
             )
@@ -176,7 +166,7 @@ class fsm_customize {
 
         /* Main Accent Color */
 
-        $wp_customize->add_setting( 'fsm_main_accent_color',
+        $wp_customize->add_setting( 'jc_core_main_accent_color',
             array(
                 'default'    => '#666666',
                 'type'       => 'theme_mod',
@@ -188,11 +178,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_main_accent_color',
+                'jc_core_main_accent_color',
                 array(
-                    'label'    => __('Main Accent Color', 'fsm_core'),
+                    'label'    => __('Main Accent Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_main_accent_color',
+                    'settings' => 'jc_core_main_accent_color',
                     'priority' => 10,
                 )
             )
@@ -200,7 +190,7 @@ class fsm_customize {
 
         /* Secondary Accent Color */
 
-        $wp_customize->add_setting( 'fsm_secondary_accent_color',
+        $wp_customize->add_setting( 'jc_core_secondary_accent_color',
             array(
                 'default'    => '#444444',
                 'type'       => 'theme_mod',
@@ -212,11 +202,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_secondary_accent_color',
+                'jc_core_secondary_accent_color',
                 array(
-                    'label'    => __('Secondary Accent Color', 'fsm_core'),
+                    'label'    => __('Secondary Accent Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_secondary_accent_color',
+                    'settings' => 'jc_core_secondary_accent_color',
                     'priority' => 10,
                 )
             )
@@ -224,7 +214,7 @@ class fsm_customize {
 
         /* Main Accent Text Color */
 
-        $wp_customize->add_setting( 'fsm_main_accent_textcolor',
+        $wp_customize->add_setting( 'jc_core_main_accent_textcolor',
             array(
                 'default'    => '#ffffff',
                 'type'       => 'theme_mod',
@@ -236,11 +226,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_main_accent_textcolor',
+                'jc_core_main_accent_textcolor',
                 array(
-                    'label'    => __('Main Accent Text Color', 'fsm_core'),
+                    'label'    => __('Main Accent Text Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_main_accent_textcolor',
+                    'settings' => 'jc_core_main_accent_textcolor',
                     'priority' => 10,
                 )
             )
@@ -248,7 +238,7 @@ class fsm_customize {
         
         /* Secondary Accent Text Color */
 
-        $wp_customize->add_setting( 'fsm_secondary_accent_textcolor',
+        $wp_customize->add_setting( 'jc_core_secondary_accent_textcolor',
             array(
                 'default'    => '#666',
                 'type'       => 'theme_mod',
@@ -260,34 +250,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_secondary_accent_textcolor',
+                'jc_core_secondary_accent_textcolor',
                 array(
-                    'label'    => __('Secondary Accent Text Color', 'fsm_core'),
+                    'label'    => __('Secondary Accent Text Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_secondary_accent_textcolor',
-                    'priority' => 10,
-                )
-            )
-        );
-
-        /* Block Background Color */
-
-        $wp_customize->add_setting( 'fsm_block_background_color',
-            array(
-                'type'       => 'theme_mod',
-                'capability' => 'edit_theme_options',
-                'transport'  => 'refresh',
-            )
-        );
-
-        $wp_customize->add_control(
-            new WP_Customize_Color_Control(
-                $wp_customize,
-                'fsm_block_background_color',
-                array(
-                    'label'    => __('Block Background Color', 'fsm_core'),
-                    'section'  => 'colors',
-                    'settings' => 'fsm_block_background_color',
+                    'settings' => 'jc_core_secondary_accent_textcolor',
                     'priority' => 10,
                 )
             )
@@ -295,7 +262,7 @@ class fsm_customize {
 
         /* Home Main Background Color */
 
-        $wp_customize->add_setting( 'fsm_home_main_background_color',
+        $wp_customize->add_setting( 'jc_core_home_main_background_color',
             array(
                 'type'       => 'theme_mod',
                 'capability' => 'edit_theme_options',
@@ -306,11 +273,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_home_main_background_color',
+                'jc_core_home_main_background_color',
                 array(
-                    'label'    => __('Homepage Main Background Color', 'fsm_core'),
+                    'label'    => __('Homepage Main Background Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_home_main_background_color',
+                    'settings' => 'jc_core_home_main_background_color',
                     'priority' => 10,
                 )
             )
@@ -318,7 +285,7 @@ class fsm_customize {
 
         /* Footer Background Color */
 
-        $wp_customize->add_setting( 'fsm_footer_background_color',
+        $wp_customize->add_setting( 'jc_core_footer_background_color',
             array(
                 'default'    => false,
                 'type'       => 'theme_mod',
@@ -330,11 +297,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_footer_background_color',
+                'jc_core_footer_background_color',
                 array(
-                    'label'    => __('Footer Background Color', 'fsm_core'),
+                    'label'    => __('Footer Background Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_footer_background_color',
+                    'settings' => 'jc_core_footer_background_color',
                     'priority' => 10,
                 )
             )
@@ -342,7 +309,7 @@ class fsm_customize {
 
         /* Footer Text Color */
 
-        $wp_customize->add_setting( 'fsm_footer_textcolor',
+        $wp_customize->add_setting( 'jc_core_footer_textcolor',
             array(
                 'default'    => false,
                 'type'       => 'theme_mod',
@@ -354,11 +321,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Color_Control(
                 $wp_customize,
-                'fsm_footer_textcolor',
+                'jc_core_footer_textcolor',
                 array(
-                    'label'    => __('Footer Text Color', 'fsm_core'),
+                    'label'    => __('Footer Text Color', 'jc_core_core'),
                     'section'  => 'colors',
-                    'settings' => 'fsm_footer_textcolor',
+                    'settings' => 'jc_core_footer_textcolor',
                     'priority' => 10,
                 )
             )
@@ -370,15 +337,15 @@ class fsm_customize {
         //===== Header
         //====================================================
 
-        $wp_customize->add_section( 'fsm-header',
+        $wp_customize->add_section( 'jc_core-header',
             array(
-                'title'       => __('Header', 'fsm_core'),
+                'title'       => __('Header', 'jc_core_core'),
                 'priority'    => 35,
                 'capability'  => 'edit_theme_options',
             )
         );
 
-        $wp_customize->add_setting( 'fsm_header_background_image',
+        $wp_customize->add_setting( 'jc_core_header_background_image',
             array(
                 'default'    => false,
                 'type'       => 'theme_mod',
@@ -390,11 +357,11 @@ class fsm_customize {
         $wp_customize->add_control(
             new WP_Customize_Image_Control(
                 $wp_customize,
-                'fsm_header_background_image',
+                'jc_core_header_background_image',
                 array(
-                    'label'    => __('Header Background Image', 'fsm_core'),
-                    'section'  => 'fsm-header',
-                    'settings' => 'fsm_header_background_image',
+                    'label'    => __('Header Background Image', 'jc_core_core'),
+                    'section'  => 'jc_core-header',
+                    'settings' => 'jc_core_header_background_image',
                     'priority' => 10,
                 )
             )
@@ -410,12 +377,12 @@ class fsm_customize {
             'right'  =>  'Right',
         );
 
-        $wp_customize->add_setting( 'fsm_header_menu_font_size' );
+        $wp_customize->add_setting( 'jc_core_header_menu_font_size' );
 
         $wp_customize->add_control(
-            'fsm_header_menu_font_size',
+            'jc_core_header_menu_font_size',
             array(
-                'label'    => __('Header Menu Font Size (%)', 'fsm_core'),
+                'label'    => __('Header Menu Font Size (%)', 'jc_core_core'),
                 'section'  => 'nav',
                 'default'  => '110',
                 'type'     => 'number',
@@ -423,12 +390,12 @@ class fsm_customize {
             )
         );
         
-        $wp_customize->add_setting( 'fsm_header_menu_item_padding' );
+        $wp_customize->add_setting( 'jc_core_header_menu_item_padding' );
 
         $wp_customize->add_control(
-            'fsm_header_menu_item_padding',
+            'jc_core_header_menu_item_padding',
             array(
-                'label'    => __('Header Menu Item Padding (px)', 'fsm_core'),
+                'label'    => __('Header Menu Item Padding (px)', 'jc_core_core'),
                 'section'  => 'nav',
                 'default'  => '16',
                 'type'     => 'number',
@@ -436,10 +403,10 @@ class fsm_customize {
             )
         );
         
-        $wp_customize->add_setting( 'fsm_header_menu_alignment' );
+        $wp_customize->add_setting( 'jc_core_header_menu_alignment' );
 
         $wp_customize->add_control(
-            'fsm_header_menu_alignment',
+            'jc_core_header_menu_alignment',
             array(
                 'type' => 'select',
                 'label' => 'Header Menu Alignment',
@@ -455,38 +422,38 @@ class fsm_customize {
          * Site Options
          **/
 
-        $wp_customize->add_section( 'fsm-site-options',
+        $wp_customize->add_section( 'jc-core-site-options',
             array(
-                'title'       => __('Site Options', 'fsm_core'),
+                'title'       => __('Site Options', 'jc_core_core'),
                 'priority'    => 35,
                 'capability'  => 'edit_theme_options',
-                'description' => 'Some general settings for around your site', 'fsm_core',
+                'description' => 'Some general settings for around your site', 'jc_core_core',
             )
         );
 
-        /* Company Name -- Can be accessed using [company-name] (defined in shortcodes.php) */
+        /* Site Name -- Can be accessed using [site-name] (defined in shortcodes.php) */
 
-        $wp_customize->add_setting( 'fsm_site_company_name',
+        $wp_customize->add_setting( 'jc_core_site_site_name',
             array(
-                'default'           => 'Your Company Name',
+                'default'           => 'Your Site Name',
                 'sanitize_callback' => 'wp_strip_all_tags'
             )
         );
 
         $wp_customize->add_control(
-            'fsm_site_company_name',
+            'jc_core_site_site_name',
             array(
-                'label'    => __('Company Name', 'fsm_core'),
-                'section'  => 'fsm-site-options',
+                'label'    => __('Site Name', 'jc_core_core'),
+                'section'  => 'jc_core-site-options',
                 'type'     => 'text',
-                'settings' => 'fsm_site_company_name',
+                'settings' => 'jc_core_site_site_name',
                 'priority' => 10,
             )
         );
         
         /* Copyright Name -- Can be accessed using [copyright-name] (defined in shortcodes.php) */
 
-        $wp_customize->add_setting( 'fsm_site_copyright_name',
+        $wp_customize->add_setting( 'jc_core_site_copyright_name',
             array(
                 'default'           => 'Your Copyright Name',
                 'sanitize_callback' => 'wp_strip_all_tags'
@@ -494,28 +461,28 @@ class fsm_customize {
         );
 
         $wp_customize->add_control(
-            'fsm_site_copyright_name',
+            'jc_core_site_copyright_name',
             array(
-                'label'    => __('Copyright Name', 'fsm_core'),
-                'section'  => 'fsm-site-options',
+                'label'    => __('Copyright Name', 'jc_core_core'),
+                'section'  => 'jc_core-site-options',
                 'type'     => 'text',
-                'settings' => 'fsm_site_copyright_name',
+                'settings' => 'jc_core_site_copyright_name',
                 'priority' => 10,
             )
         );
 
-        /* Company Logo -- Can be accessed using [company-logo] (defined in shortcodes.php) */
+        /* Site Logo -- Can be accessed using [site-logo] (defined in shortcodes.php) */
 
-        $wp_customize->add_setting( 'fsm_site_company_logo' );
+        $wp_customize->add_setting( 'jc_core_site_site_logo' );
 
         $wp_customize->add_control(
             new WP_Customize_Image_Control(
                 $wp_customize,
-                'fsm_site_company_logo',
+                'jc_core_site_site_logo',
                 array(
-                    'label' => 'Company Logo',
-                    'section' => 'fsm-site-options',
-                    'settings' => 'fsm_site_company_logo',
+                    'label' => 'Site Logo',
+                    'section' => 'jc_core-site-options',
+                    'settings' => 'jc_core_site_site_logo',
                     'priority' => 6,
                 )
             )
@@ -523,105 +490,32 @@ class fsm_customize {
         
          /* Site Favicon */
 
-        $wp_customize->add_setting( 'fsm_site_favicon' );
+        $wp_customize->add_setting( 'jc_core_site_favicon' );
 
         $wp_customize->add_control(
             new WP_Customize_Image_Control(
                 $wp_customize,
-                'fsm_site_favicon',
+                'jc_core_site_favicon',
                 array(
                     'label' => 'Site Favicon',
-                    'section' => 'fsm-site-options',
-                    'settings' => 'fsm_site_favicon',
+                    'section' => 'jc_core-site-options',
+                    'settings' => 'jc_core_site_favicon',
                     'priority' => 8,
                 )
             )
         );
 
-        /* Round Corners */
-
-        $wp_customize->add_setting( 'fsm_site_round_corners' );
-
-        $wp_customize->add_control(
-            'fsm_site_round_corners',
-            array(
-                'label'    => __('Rounded Corners', 'fsm_core'),
-                'section'  => 'fsm-site-options',
-                'type'     => 'checkbox',
-                'priority' => 10,
-            )
-        );
-
-        /* Banner Widget Height */
-
-        $wp_customize->add_setting( 'fsm_banner_height' );
-
-        $wp_customize->add_control(
-            'fsm_banner_height',
-            array(
-                'label'    => __('Banner Widget Height (px)', 'fsm_core'),
-                'section'  => 'fsm-site-options',
-                'default'  => '0',
-                'type'     => 'number',
-                'priority' => 12,
-            )
-        );
-
-        /* Small Block Height */
-
-        $wp_customize->add_setting( 'fsm_small_block_height' );
-
-        $wp_customize->add_control(
-            'fsm_small_block_height',
-            array(
-                'default'  => '125',
-                'label'    => __('Small Block Height (px)', 'fsm_core'),
-                'section'  => 'fsm-site-options',
-                'type'     => 'number',
-                'priority' => 13,
-            )
-        );
-
-        /* Normal Block Height */
-
-        $wp_customize->add_setting( 'fsm_normal_block_height' );
-
-        $wp_customize->add_control(
-            'fsm_normal_block_height',
-            array(
-                'default'  => '200',
-                'label'    => __('Normal Block Height (px)', 'fsm_core'),
-                'section'  => 'fsm-site-options',
-                'type'     => 'number',
-                'priority' => 14,
-            )
-        );
-
-        /* Tall Block Height */
-
-        $wp_customize->add_setting( 'fsm_tall_block_height' );
-
-        $wp_customize->add_control(
-            'fsm_tall_block_height',
-            array(
-                'default'  => '400',
-                'label'    => __('Tall Block Height (px)', 'fsm_core'),
-                'section'  => 'fsm-site-options',
-                'type'     => 'number',
-                'priority' => 15,
-            )
-        );
 
         /**
          * Font Options
          **/
 
-        $wp_customize->add_section( 'fsm-font-options',
+        $wp_customize->add_section( 'jc-core-font-options',
             array(
-                'title'       => __('Font Options', 'fsm_core'),
+                'title'       => __('Font Options', 'jc_core_core'),
                 'priority'    => 35,
                 'capability'  => 'edit_theme_options',
-                'description' => 'Fonts used on your site', 'fsm_core',
+                'description' => 'Fonts used on your site', 'jc_core_core',
             )
         );
 
@@ -641,59 +535,41 @@ class fsm_customize {
             $heading_font_picker_array[$slug] = $font['name'];
         }
 
-        $wp_customize->add_setting( 'fsm_body_font' );
+        $wp_customize->add_setting( 'jc_core_body_font' );
 
         $wp_customize->add_control(
-            'fsm_body_font',
+            'jc_core_body_font',
             array(
                 'type' => 'select',
                 'label' => 'Body Font',
-                'section' => 'fsm-font-options',
+                'section' => 'jc_core-font-options',
                 'choices' => $body_font_picker_array
             )
         );
 
-        $wp_customize->add_setting( 'fsm_heading_font' );
+        $wp_customize->add_setting( 'jc_core_heading_font' );
 
         $wp_customize->add_control(
-            'fsm_heading_font',
+            'jc_core_heading_font',
             array(
                 'type' => 'select',
                 'label' => 'Heading Font',
-                'section' => 'fsm-font-options',
+                'section' => 'jc_core-font-options',
                 'choices' => $heading_font_picker_array
             )
         );
 
-        foreach (self::$heading_font_options as $element => $element_name) {
-
-            $wp_customize->add_setting( 'fsm_heading_font_' . $element );
-
-            $wp_customize->add_control(
-                'fsm_heading_font_' . $element,
-                array(
-                    'type' => 'checkbox',
-                    'default' => '1',
-                    'label' => $element_name . ' uses Heading Font?',
-                    'section' => 'fsm-font-options'
-                )
-            );
-
-        }
-
     }
-
-
 
     public static function header_output () {
         $fonts_array = self::get_fonts_array();
         $body_fonts_array = $fonts_array['body'];
         $heading_fonts_array = $fonts_array['heading'];
-        $body_font_family_slug = ! empty( get_theme_mod('fsm_body_font') ) ? get_theme_mod('fsm_body_font') : 'arial';
-        $heading_font_family_slug = ! empty( get_theme_mod('fsm_heading_font') ) ? get_theme_mod('fsm_heading_font') : 'arial';
-        $widget_normal_height = ! empty( get_theme_mod('fsm_normal_block_height') ) ? get_theme_mod('fsm_normal_block_height') : 330;
-        $widget_small_height = ! empty( get_theme_mod('fsm_small_block_height') ) ? get_theme_mod('fsm_small_block_height') : 200;
-        $widget_tall_height = ! empty( get_theme_mod('fsm_tall_block_height') ) ? get_theme_mod('fsm_tall_block_height') : 440;
+        $body_font_family_slug = ! empty( get_theme_mod('jc_core_body_font') ) ? get_theme_mod('jc_core_body_font') : 'arial';
+        $heading_font_family_slug = ! empty( get_theme_mod('jc_core_heading_font') ) ? get_theme_mod('jc_core_heading_font') : 'arial';
+        $widget_normal_height = ! empty( get_theme_mod('jc_core_normal_block_height') ) ? get_theme_mod('jc_core_normal_block_height') : 330;
+        $widget_small_height = ! empty( get_theme_mod('jc_core_small_block_height') ) ? get_theme_mod('jc_core_small_block_height') : 200;
+        $widget_tall_height = ! empty( get_theme_mod('jc_core_tall_block_height') ) ? get_theme_mod('jc_core_tall_block_height') : 440;
 
         if ( $body_fonts_array[$body_font_family_slug]['url'] ) {
             echo '<link href="' . $body_fonts_array[$body_font_family_slug]['url'] . '" rel="stylesheet" type="text/css" />'.PHP_EOL;
@@ -711,21 +587,16 @@ class fsm_customize {
         $elements_array['header-color'][] = 'header';
         $elements_array['header-color'][] = 'header a';
 
-        foreach (self::$heading_font_options as $element => $element_name) {
-            if ( get_theme_mod('fsm_heading_font_' . $element) ) {
-                $elements_array['heading-font'][] = $element;
-            }
-        }
         
         //==== THEME SPECIFIC ====
         //---- Order Form ----
-        $elements_array['accent_bg'][] = '.fsm-order-form .block > .block-title';
+        $elements_array['accent_bg'][] = '.jc_core-order-form .block > .block-title';
         
         //---- Memphis ----
-        $elements_array['accent_bg'][] = '.fsm-memphis .block > .block-title';
+        $elements_array['accent_bg'][] = '.jc_core-memphis .block > .block-title';
 
         //---- Portland ----
-        $elements_array['secondary_accent_fg'][] = '.fsm-portland .block > .block-title';
+        $elements_array['secondary_accent_fg'][] = '.jc_core-portland .block > .block-title';
 
         $elements_array['accent_bg'][] = 'header nav';
         $elements_array['accent_bg'][] = 'header nav ul';
@@ -773,46 +644,46 @@ class fsm_customize {
         ?>
         <!--Customizer CSS-->
         <style type="text/css"><?php
-            self::generate_css('body', 'background-image', 'fsm_background_image', 'url(\'', '\')');
+            self::generate_css('body', 'background-image', 'jc_core_background_image', 'url(\'', '\')');
             echo 'body{font-family:'.$body_fonts_array[$body_font_family_slug]['css'].';}';
             echo $elements['heading-font'] . '{font-family:'.$heading_fonts_array[$heading_font_family_slug]['css'].';}';
 
-            if (!empty(get_theme_mod('fsm_header_background_image'))) {
-                echo $elements['header'] . '{background-image: url("' . get_theme_mod('fsm_header_background_image') . '");background-size:cover;background-position:center center;background-repeat:no-repeat;}';
+            if (!empty(get_theme_mod('jc_core_header_background_image'))) {
+                echo $elements['header'] . '{background-image: url("' . get_theme_mod('jc_core_header_background_image') . '");background-size:cover;background-position:center center;background-repeat:no-repeat;}';
             }
 
-            self::generate_css($elements['header'], 'background-color', 'fsm_header_background_color', '');
-            echo $elements['header-color'] . '{color:' . self::getContrastYIQ(get_theme_mod('fsm_header_background_color', '#FFFFFF')) . ';}';
+            self::generate_css($elements['header'], 'background-color', 'jc_core_header_background_color', '');
+            echo $elements['header-color'] . '{color:' . self::getContrastYIQ(get_theme_mod('jc_core_header_background_color', '#FFFFFF')) . ';}';
 
-            self::generate_css($elements['accent_bg'], 'background-color', 'fsm_main_accent_color', '');
-            self::generate_css($elements['accent_bg'], 'color', 'fsm_main_accent_textcolor', '');
+            self::generate_css($elements['accent_bg'], 'background-color', 'jc_core_main_accent_color', '');
+            self::generate_css($elements['accent_bg'], 'color', 'jc_core_main_accent_textcolor', '');
             
-            self::generate_css($elements['secondary_accent_fg'], 'color', 'fsm_secondary_accent_textcolor', ''); 
+            self::generate_css($elements['secondary_accent_fg'], 'color', 'jc_core_secondary_accent_textcolor', ''); 
 
-            self::generate_css($elements['secondary_accent_bg'], 'background-color', 'fsm_secondary_accent_color', '');
+            self::generate_css($elements['secondary_accent_bg'], 'background-color', 'jc_core_secondary_accent_color', '');
 
-            self::generate_css($elements['accent_border_bg'], 'border-color', 'fsm_main_accent_color', '');
+            self::generate_css($elements['accent_border_bg'], 'border-color', 'jc_core_main_accent_color', '');
 
-            self::generate_css($elements['block_bg_color'], 'background-color', 'fsm_block_background_color', '');
+            self::generate_css($elements['block_bg_color'], 'background-color', 'jc_core_block_background_color', '');
 
-            self::generate_css($elements['home_main_bg_color'], 'background-color', 'fsm_home_main_background_color', '');
+            self::generate_css($elements['home_main_bg_color'], 'background-color', 'jc_core_home_main_background_color', '');
 
-            self::generate_css($elements['banner'], 'height', 'fsm_banner_height', '', 'px');
+            self::generate_css($elements['banner'], 'height', 'jc_core_banner_height', '', 'px');
 
-            self::generate_css($elements['header_menu'], 'font-size', 'fsm_header_menu_font_size', '', '%');
+            self::generate_css($elements['header_menu'], 'font-size', 'jc_core_header_menu_font_size', '', '%');
 
-            self::generate_css($elements['header_menu_item'], 'padding-left', 'fsm_header_menu_item_padding', '', 'px');
-            self::generate_css($elements['header_menu_item'], 'padding-right', 'fsm_header_menu_item_padding', '', 'px');
+            self::generate_css($elements['header_menu_item'], 'padding-left', 'jc_core_header_menu_item_padding', '', 'px');
+            self::generate_css($elements['header_menu_item'], 'padding-right', 'jc_core_header_menu_item_padding', '', 'px');
             
             //--- Block height
             echo $elements['block'] . '{height:' . $widget_normal_height . 'px;}';
             echo $elements['block_short'] . '{height:' . $widget_small_height . 'px;}';
             echo $elements['block_tall'] . '{height:' . $widget_tall_height . 'px;}';
 
-            self::generate_css($elements['accent_fg'], 'color', 'fsm_main_accent_color', '');
+            self::generate_css($elements['accent_fg'], 'color', 'jc_core_main_accent_color', '');
 
-            self::generate_css($elements['footer'], 'background-color', 'fsm_footer_background_color', '');
-            self::generate_css($elements['footer'], 'color', 'fsm_footer_textcolor', '');
+            self::generate_css($elements['footer'], 'background-color', 'jc_core_footer_background_color', '');
+            self::generate_css($elements['footer'], 'color', 'jc_core_footer_textcolor', '');
         ?></style>
         <!--/Customizer CSS-->
         <?php
@@ -827,10 +698,10 @@ class fsm_customize {
          * Add body class for rounded corners and nav alignment
          **/
 
-        if ( get_theme_mod( 'fsm_site_round_corners' ) == '1' ) {
+        if ( get_theme_mod( 'jc_core_site_round_corners' ) == '1' ) {
             $classes[] = 'round-corners';
         }
-        switch ( get_theme_mod( 'fsm_header_menu_alignment' ) ) {
+        switch ( get_theme_mod( 'jc_core_header_menu_alignment' ) ) {
             case 'left':
                 $classes[] = 'nav-alignleft';
                 break;
@@ -890,8 +761,8 @@ class fsm_customize {
 
 }
 
-add_action( 'customize_register' , array( 'fsm_customize' , 'register' ) );
-add_action( 'wp_head' , array( 'fsm_customize' , 'header_output' ) );
-add_filter( 'body_class' , array( 'fsm_customize' , 'body_class' ) );
-//add_action( 'customize_preview_init' , array( 'fsm_customize' , 'live_preview' ) );
+add_action( 'customize_register' , array( 'jc_core_customize' , 'register' ) );
+add_action( 'wp_head' , array( 'jc_core_customize' , 'header_output' ) );
+add_filter( 'body_class' , array( 'jc_core_customize' , 'body_class' ) );
+//add_action( 'customize_preview_init' , array( 'jc_core_customize' , 'live_preview' ) );
 ?>
