@@ -1,14 +1,14 @@
 <?php
-//==== FSM Shortcodes
+//==== jc Core Shortcodes
 
 /**
- * [company-name]
- * Prints company name from theme customizer
+ * [site-name]
+ * Prints site name from theme customizer
  **/
-function fsm_shortcode_company_name($atts) {
-    return '<span class="company-name">' . get_theme_mod( 'fsm_site_company_name', 'Your Company Name Here') . '</span>';
+function fsm_shortcode_site_name($atts) {
+    return '<span class="site-name">' . get_theme_mod( 'fsm_site_site_name', 'Your Site Name Here') . '</span>';
 }
-add_shortcode( 'company-name', 'fsm_shortcode_company_name');
+add_shortcode( 'site-name', 'fsm_shortcode_site_name');
 
 /**
  * [copyright-name]
@@ -20,17 +20,17 @@ function fsm_shortcode_copyright_name($atts) {
 add_shortcode( 'copyright-name', 'fsm_shortcode_copyright_name');
 
 /**
- * [company-logo]
- * Prints company logo from theme customizer
+ * [site-logo]
+ * Prints site logo from theme customizer
  **/
-function fsm_shortcode_company_logo($atts) {
-    if ( get_theme_mod( 'fsm_site_company_logo' ) !== "" ) {
-        return '<img src="' . get_theme_mod( 'fsm_site_company_logo' ) . '" alt="' . get_theme_mod( 'fsm_site_company_name', 'Your Company Name Here') . '" class="logo" />';
+function fsm_shortcode_site_logo($atts) {
+    if ( get_theme_mod( 'fsm_site_site_logo' ) !== "" ) {
+        return '<img src="' . get_theme_mod( 'fsm_site_site_logo' ) . '" alt="' . get_theme_mod( 'fsm_site_site_name', 'Your Site Name Here') . '" class="logo" />';
     } else {
-        return '<img src="' . get_template_directory_uri() . '/img/logo-dark.png' . '" alt="' . get_theme_mod( 'fsm_site_company_name', 'Your Company Name Here') . '" class="logo" />';
+        return '<img src="' . get_template_directory_uri() . '/img/logo-dark.png' . '" alt="' . get_theme_mod( 'fsm_site_site_name', 'Your Site Name Here') . '" class="logo" />';
     }
 }
-add_shortcode( 'company-logo', 'fsm_shortcode_company_logo');
+add_shortcode( 'site-logo', 'fsm_shortcode_site_logo');
 
 /**
  * [list-sibling-pages]
