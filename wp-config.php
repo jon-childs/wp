@@ -42,14 +42,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'T?`<^L>,zVmB/D:]p>I)-fP|/58o^(YGL[+M+wM{:6k?3G1hH%sWt.J% /|ZxdNX');
-define('SECURE_AUTH_KEY',  '^y+#1A/IRi[:ju,%O26Gdlgt(TG+KC=-`O>xA0{:G-|B|oxOmk7A]!AaRYMFrV-|');
-define('LOGGED_IN_KEY',    '5o5v.X?dx.i+x.t#n+O+(c@w?Av93Cha+^D `)BYx}P:SeOZiXpQxH{uPH!Dj++4');
-define('NONCE_KEY',        '/eV}qD28{V1v#~l_^G51EstLIBR1?%4P+|LnZ8VNrvm5Yehc[>gICB|,=- <GdvV');
-define('AUTH_SALT',        'GEv4wHY|q[9W<ah_1S]X6OmiEu@cm81L5=3]Z[FPdW.|?9)#]05!qZs 3oz@bI}I');
-define('SECURE_AUTH_SALT', '2|CT__Z8MaoDvPh,yTfb_ IF:xxm+Rvl4W!v&O~Zq,8XT#<r?Bo^_d@3PEPJ3r6#');
-define('LOGGED_IN_SALT',   '*U|qo]dGz_XTdg<3O7n>p,|5uh/~d-2MI)X1gA62-r-E#J({7oB$kAZrKy>?tJK2');
-define('NONCE_SALT',       'f&qJw.46(&%1<S1Sr1zWzp~nkbc-=XbhCXmf+!:mLvy+W,r;Q0?+U{OSvUN6M;P5');
+define('AUTH_KEY',         'lj}^~HV#I@%`g]rYhQugzIsk,V)({-U<Ob&q|&3FAk~b_}I``z/$8S0h8+a;wdx(');
+define('SECURE_AUTH_KEY',  ']!O?M?L1wR MjM;y}nS2)bBC1cKk1M?dUJ/zOk{+(Y+](3k@a,p!/{V-)%pd!0<)');
+define('LOGGED_IN_KEY',    '_,d@jHNw+4?KH%yp5B9-;sdL;T0+9-W?(0,k=S|?WyaF!34-9D|kHw#Ny5As:Zy`');
+define('NONCE_KEY',        'LSb~q-A/,QdVg,u1BFc9A7.s9t:MP6C|L@vb4nZp:<]RU^>DZL58sf&Ux2P-dt Y');
+define('AUTH_SALT',        'uw/!F]0g(xVV @S{eJ)cgY#y6j.ZrF`R_T!_qjbxZmCJ6_#/ozE$A:o+M:#R|el-');
+define('SECURE_AUTH_SALT', 'eQS{&]ZH0P/CbkJ%#CH;XR,/D@fDU|aN#:c15i/pJyMAtc~-APrHUP`Vj~o?N?:C');
+define('LOGGED_IN_SALT',   's!rx1=sdvA/)q[@|t2-7Qn4RL-[G)nORGj7Z-GUD;T<ntqinBOmacyo7]kspwc<J');
+define('NONCE_SALT',       '9pgw [pu-VDl.aNAB${PH.%W+yQ2+Mg{Ty[g7ikZ=ut4Yz(+MFo1V=cf/j)]qyQ1');
 
 /**#@-*/
 
@@ -68,7 +68,7 @@ $table_prefix  = 'wp_';
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
 
 /* That's all, stop editing! Happy blogging. */
 

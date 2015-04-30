@@ -1,0 +1,62 @@
+/*!
+	Theme Name: jc Core
+	Theme URI: http://jonchilds.me/
+	Description: Core Theme by Jon Childs
+	Version: 2014.04.29
+	Author: Jon Childs
+	Author URI: http://jonchilds.me/
+
+	License: GPL
+	License URI: http://opensource.org/licenses/GPL-3.0
+*/
+
+@import "normalize";
+
+*,
+*:after,
+*:before {
+	-moz-box-sizing:border-box;
+	-webkit-font-smoothing:antialiased;
+	box-sizing:border-box;
+	font-smoothing:antialiased;
+	text-rendering:optimizeLegibility;
+}
+
+*{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	z-index: inherit;
+}
+
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/grid";
+@import "parts/typography";
+@import "parts/utilities";
+
+
+/*=======================================================================================*/
+/*=================================BEGIN RESPONSIVE======================================*/
+/*=======================================================================================*/
+
+@media (min-width: 992px){
+	
+}
+
+@media (max-width: 991px){
+
+}
+
+@media (max-width: 991px){
+
+
+}
+
+@media (max-width: 479px){
+
+}
+
+/*=======================================================================================*/
+/*==============================END RESPONSIVE===========================================*/
+/*=======================================================================================*/

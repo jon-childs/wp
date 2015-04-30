@@ -1,0 +1,34 @@
+/* Styles for the WordPress editor */
+/* line 1, ../scss/parts/_typography.scss */
+body {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif, serif;
+  font-size: medium;
+}
+
+/* line 6, ../scss/parts/_typography.scss */
+h1, h2, h3, h4 {
+  font-weight: normal;
+}
+
+/* line 10, ../scss/parts/_typography.scss */
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.8em;
+}
+
+/* line 15, ../scss/parts/_typography.scss */
+h2 {
+  font-size: 1.6em;
+  margin-bottom: 0.4em;
+}
+
+/* line 20, ../scss/parts/_typography.scss */
+h3 {
+  font-size: 1.4em;
+  margin-bottom: 0.2em;
+}
+
+/* line 25, ../scss/parts/_typography.scss */
+h4 {
+  font-size: 1.2em;
+}
